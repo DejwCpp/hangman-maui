@@ -9,23 +9,30 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Grid Padding="20">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Image
-                        Source="hangman_zero.png"
-                        HeightRequest="400"/>
+                    <Image Source="hangman_nine.png" HeightRequest="400"/>
                 </StackLayout>
 
-                <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label
-                        Text="Hello right"/>
-                </StackLayout>
-                
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout x:Name="gridHiddenMsg" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                        <!-- dynamically generated Label with hidden message -->
+                    </StackLayout>
+
+                    <StackLayout x:Name="gridButtons" Grid.Row="1" VerticalOptions="Center">
+                        <!-- dynamically generated Grid with buttons -->
+                    </StackLayout>
+                </Grid>
             </Grid>
 
         </VerticalStackLayout>
