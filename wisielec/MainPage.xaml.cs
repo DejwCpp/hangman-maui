@@ -134,7 +134,11 @@
 
         private void BtnClick(object sender, EventArgs e)
         {
-            CountClickedBtns++;
+            if (++CountClickedBtns >= 12) { return; }
+
+            Button btn = (Button)sender;
+
+            btn.IsEnabled = false;
 
             UpdateImage();
         }
@@ -143,9 +147,7 @@
         {
             string[] strNumber = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
 
-            if (CountClickedBtns >= 12) { return; }
-
-            hangmanImg.Source = "hangman_" + strNumber[CountClickedBtns].ToString() + ".png";
+            hangmanImg.Source = "hangman_" + strNumber[CountClickedBtns] + ".png";
         }
     }
 
