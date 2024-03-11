@@ -15,8 +15,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Image Source="hangman_nine.png" HeightRequest="400"/>
+                <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" HeightRequest="400" WidthRequest="400">
+                    <Image x:Name="hangmanImg" Source="hangman_zero.png" HeightRequest="400"/>
                 </StackLayout>
 
                 <Grid Grid.Column="1">

@@ -9,6 +9,8 @@
             DisplayButtons();
         }
 
+        int CountClickedBtns = 0;
+
         private void DisplayHiddenMessage()
         {
             string visibleMsg = "hello world";
@@ -60,6 +62,8 @@
                     HeightRequest = 50,
                     Margin = 1
                 };
+                btnRow1.Clicked += BtnClick;
+
                 SetBtnText(btnRow1);
 
                 row1.AddColumnDefinition(new ColumnDefinition());
@@ -80,6 +84,8 @@
                     HeightRequest = 50,
                     Margin = 1
                 };
+                btnRow2.Clicked += BtnClick;
+
                 SetBtnText(btnRow2);
 
                 row2.AddColumnDefinition(new ColumnDefinition());
@@ -100,6 +106,8 @@
                     HeightRequest = 50,
                     Margin = 1
                 };
+                btnRow3.Clicked += BtnClick;
+
                 SetBtnText(btnRow3);
 
                 row3.AddColumnDefinition(new ColumnDefinition());
@@ -122,6 +130,22 @@
             string letter = "qwertyuiopasdfghjklzxcvbnm";
 
             btn.Text = letter[globalCount++].ToString();
+        }
+
+        private void BtnClick(object sender, EventArgs e)
+        {
+            CountClickedBtns++;
+
+            UpdateImage();
+        }
+
+        private void UpdateImage()
+        {
+            string[] strNumber = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
+
+            if (CountClickedBtns >= 12) { return; }
+
+            hangmanImg.Source = "hangman_" + strNumber[CountClickedBtns].ToString() + ".png";
         }
     }
 
