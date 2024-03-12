@@ -14,22 +14,27 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
+                
                 <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" HeightRequest="400" WidthRequest="400">
                     <Image x:Name="hangmanImg" Source="hangman_zero.png" HeightRequest="400"/>
                 </StackLayout>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackLayout x:Name="gridHiddenMsg" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout x:Name="displayInfo" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                        <!-- dynamically generated Label containing "you won" or "you lost" text -->
+                    </StackLayout>
+
+                    <StackLayout x:Name="gridHiddenMsg" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center">
                         <!-- dynamically generated Label with hidden message -->
                     </StackLayout>
 
-                    <StackLayout x:Name="gridButtons" Grid.Row="1" VerticalOptions="Center">
+                    <StackLayout x:Name="gridButtons" Grid.Row="2" VerticalOptions="Center">
                         <!-- dynamically generated Grid with buttons -->
                     </StackLayout>
                 </Grid>

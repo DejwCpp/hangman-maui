@@ -138,11 +138,17 @@ namespace wisielec
         {
             Button btn = (Button)sender;
 
+            btn.IsEnabled = false;
+
             if (!PasswordContainLetter(sender, e))
             {
-                if (++CountClickedBtns >= 12) { return; }
+                btn.BackgroundColor = Color.FromRgb(239, 35, 60);
+                btn.TextColor = Colors.Black;
 
-                btn.IsEnabled = false;
+                if (++CountClickedBtns >= 11)
+                {
+                    GameOver("you lost", Color.FromRgb(239, 35, 60));
+                }
 
                 UpdateImage();
 
@@ -151,20 +157,30 @@ namespace wisielec
 
             // when password contains clicked letter
 
+            btn.BackgroundColor = Color.FromRgb(204, 255, 51);
+            btn.TextColor = Colors.Black;
+
             StringBuilder newHiddenMsg = new StringBuilder(hiddenMsg);
 
 
             for (int i = 0; i < visibleMsg.Length; i++)
             {
-                if (visibleMsg[i].ToString() == btn.Text)
+                if (visibleMsg[i].ToString().ToLower() == btn.Text)
                 {
                     newHiddenMsg[i * 2] = visibleMsg[i];
                 }
             }
             hiddenMsg = newHiddenMsg.ToString();
 
-            Label labelMsg = (Label)gridHiddenMsg.Children[0]; // Get the label from the grid
+            Label labelMsg = (Label)gridHiddenMsg.Children[0];
             labelMsg.Text = hiddenMsg;
+
+            // win game condition
+            if (!hiddenMsg.Contains('_'))
+            {
+                GameOver("you won", Color.FromRgb(204, 255, 51));
+                return;
+            }
         }
 
         private void UpdateImage()
@@ -180,12 +196,24 @@ namespace wisielec
 
             foreach (char letter in visibleMsg)
             {
-                if (letter.ToString() == btn.Text)
+                if (letter.ToString().ToLower() == btn.Text)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        private void GameOver(string msg, Color color)
+        {
+            Label label = new Label
+            {
+                Text = msg,
+                FontSize = 56,
+                TextColor = color
+            };
+
+            displayInfo.Add(label);
         }
     }
 
