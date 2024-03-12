@@ -1,4 +1,6 @@
-﻿namespace wisielec
+﻿using System.Text;
+
+namespace wisielec
 {
     public partial class MainPage : ContentPage
     {
@@ -11,11 +13,11 @@
 
         int CountClickedBtns = 0;
 
+        string visibleMsg = "hello world";
+        string hiddenMsg = "";
+
         private void DisplayHiddenMessage()
         {
-            string visibleMsg = "hello world";
-            string hiddenMsg = "";
-
             for (int i = 0; i < visibleMsg.Length; i++)
             {
                 if (visibleMsg[i] == ' ')
@@ -134,13 +136,35 @@
 
         private void BtnClick(object sender, EventArgs e)
         {
-            if (++CountClickedBtns >= 12) { return; }
-
             Button btn = (Button)sender;
 
-            btn.IsEnabled = false;
+            if (!PasswordContainLetter(sender, e))
+            {
+                if (++CountClickedBtns >= 12) { return; }
 
-            UpdateImage();
+                btn.IsEnabled = false;
+
+                UpdateImage();
+
+                return;
+            }
+
+            // when password contains clicked letter
+
+            StringBuilder newHiddenMsg = new StringBuilder(hiddenMsg);
+
+
+            for (int i = 0; i < visibleMsg.Length; i++)
+            {
+                if (visibleMsg[i].ToString() == btn.Text)
+                {
+                    newHiddenMsg[i * 2] = visibleMsg[i];
+                }
+            }
+            hiddenMsg = newHiddenMsg.ToString();
+
+            Label labelMsg = (Label)gridHiddenMsg.Children[0]; // Get the label from the grid
+            labelMsg.Text = hiddenMsg;
         }
 
         private void UpdateImage()
@@ -148,6 +172,20 @@
             string[] strNumber = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
 
             hangmanImg.Source = "hangman_" + strNumber[CountClickedBtns] + ".png";
+        }
+
+        private bool PasswordContainLetter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            foreach (char letter in visibleMsg)
+            {
+                if (letter.ToString() == btn.Text)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
