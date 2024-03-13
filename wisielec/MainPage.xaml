@@ -27,7 +27,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackLayout x:Name="displayInfo" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout x:Name="displayInfo" Grid.Row="0" HorizontalOptions="Center">
                         <!-- dynamically generated Label containing "you won" or "you lost" text -->
                     </StackLayout>
 

@@ -141,11 +141,11 @@ namespace wisielec
             btn.Text = letter[globalCount++].ToString();
         }
 
-        bool EnableBtnClick = true;
+        bool EnableBtnKeyboardClick = true;
 
         private void BtnClick(object sender, EventArgs e)
         {
-            if (!EnableBtnClick) { return; }
+            if (!EnableBtnKeyboardClick) { return; }
 
             Button btn = (Button)sender;
 
@@ -245,7 +245,7 @@ namespace wisielec
 
         private void GameOver(string msg, Color color)
         {
-            EnableBtnClick = false;
+            EnableBtnKeyboardClick = false;
 
             Label label = new Label
             {
@@ -254,7 +254,69 @@ namespace wisielec
                 TextColor = color
             };
 
-            displayInfo.Add(label);
+            Button btn = new Button
+            {
+                Text = "Next one",
+                FontSize = 25,
+                WidthRequest = 150,
+                HeightRequest = 50,
+                BackgroundColor = Colors.White,
+                TextColor = Color.FromRgb(61, 49, 149),
+                Margin = new Thickness(100, 0, 0, 0)
+            };
+
+            btn.Clicked += ResetGame;
+
+            StackLayout layout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Center
+            };
+
+            layout.Children.Add(label);
+            layout.Children.Add(btn);
+
+            displayInfo.Children.Add(layout);
+        }
+
+        private void ResetGame(Object sender, EventArgs e)
+        {
+            // Clear the current hidden message
+            hiddenMsg = string.Empty;
+
+            // Reset clicked buttons and their appearances
+            foreach (var child in gridButtons.Children)
+            {
+                if (child is Grid grid)
+                {
+                    foreach (var neastedChild in grid.Children)
+                    {
+                        if (neastedChild is Button btn)
+                        {
+                            btn.IsEnabled = true;
+                            btn.BackgroundColor = Colors.White;
+                            btn.TextColor = Color.FromRgb(61, 49, 149);
+                        }
+                    }
+                }
+            }
+
+            // Reset hangman image
+            CountClickedBtns = 0;
+            UpdateImage();
+
+            // Enable button clicks
+            EnableBtnKeyboardClick = true;
+
+            // Remove previous game over message and button
+            displayInfo.Children.Clear();
+
+            // Remove previous password
+            gridHiddenMsg.Children.Clear();
+
+            // Start a new game
+            visibleMsg = ChoosePasswordFromArray();
+            DisplayHiddenMessage();
         }
     }
 
