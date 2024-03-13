@@ -41,6 +41,26 @@ namespace wisielec
             gridHiddenMsg.Children.Add(labelMsg);
         }
 
+        private void ShowPassword()
+        {
+            hiddenMsg = string.Empty;
+
+            for (int i = 0; i < visibleMsg.Length;i++)
+            {
+                hiddenMsg += $"{visibleMsg[i]} ";
+            }
+
+            // creating label for hiddenMsg
+            Label labelMsg = new Label
+            {
+                Text = hiddenMsg,
+                FontSize = 40
+            };
+
+            gridHiddenMsg.Children.Clear();
+            gridHiddenMsg.Children.Add(labelMsg);
+        }
+
         private void DisplayButtons()
         {
             Grid row1 = new Grid();
@@ -158,6 +178,7 @@ namespace wisielec
 
                 if (++CountClickedBtns >= 11)
                 {
+                    ShowPassword();
                     GameOver("you lost", Color.FromRgb(239, 35, 60));
                 }
 
@@ -217,7 +238,19 @@ namespace wisielec
                 "Adam Mickiewicz",
                 "Elon Musk",
                 "Denzel Washington",
-                "Rzeczpospolita Polska"
+                "Rzeczpospolita Polska",
+                "co ty tutaj robisz",
+                "pijemy za lepszy czas",
+                "kung fu panda",
+                "kebab na cienkim",
+                "Pan Dzierwa jest cool",
+                "onomatopeja",
+                "Bruce Lee karate mistrz",
+                "Missisipi",
+                "Massachusetts",
+                "Document Object Model",
+                "Domain Name System",
+                "gra w wisielca"
             };
 
             Random rand = new Random();
