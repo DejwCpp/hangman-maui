@@ -4,17 +4,18 @@ namespace wisielec
 {
     public partial class MainPage : ContentPage
     {
+        int CountClickedBtns = 0;
+
+        string visibleMsg;
+        string hiddenMsg;
+
         public MainPage()
         {
             InitializeComponent();
+            visibleMsg = ChoosePasswordFromArray();
             DisplayHiddenMessage();
             DisplayButtons();
         }
-
-        int CountClickedBtns = 0;
-
-        string visibleMsg = "hello world";
-        string hiddenMsg = "";
 
         private void DisplayHiddenMessage()
         {
@@ -62,7 +63,9 @@ namespace wisielec
                     FontSize = 20,
                     WidthRequest = 50,
                     HeightRequest = 50,
-                    Margin = 1
+                    Margin = 1,
+                    BackgroundColor = Colors.White,
+                    TextColor = Color.FromRgb(61, 49, 149)
                 };
                 btnRow1.Clicked += BtnClick;
 
@@ -84,7 +87,9 @@ namespace wisielec
                     FontSize = 20,
                     WidthRequest = 50,
                     HeightRequest = 50,
-                    Margin = 1
+                    Margin = 1,
+                    BackgroundColor = Colors.White,
+                    TextColor = Color.FromRgb(61, 49, 149)
                 };
                 btnRow2.Clicked += BtnClick;
 
@@ -106,7 +111,9 @@ namespace wisielec
                     FontSize = 20,
                     WidthRequest = 50,
                     HeightRequest = 50,
-                    Margin = 1
+                    Margin = 1,
+                    BackgroundColor = Colors.White,
+                    TextColor = Color.FromRgb(61, 49, 149)
                 };
                 btnRow3.Clicked += BtnClick;
 
@@ -134,8 +141,12 @@ namespace wisielec
             btn.Text = letter[globalCount++].ToString();
         }
 
+        bool EnableBtnClick = true;
+
         private void BtnClick(object sender, EventArgs e)
         {
+            if (!EnableBtnClick) { return; }
+
             Button btn = (Button)sender;
 
             btn.IsEnabled = false;
@@ -190,6 +201,34 @@ namespace wisielec
             hangmanImg.Source = "hangman_" + strNumber[CountClickedBtns] + ".png";
         }
 
+        private string ChoosePasswordFromArray()
+        {
+            string res;
+
+            string[] passwordsDatabase = {
+                "szybki biegacz",
+                "stary drewniany domek",
+                "parabola",
+                "Pan Tadeusz",
+                "inkrementacja",
+                "antyterrorysta",
+                "europarlamentarzysta",
+                "podatek dochodowy",
+                "Adam Mickiewicz",
+                "Elon Musk",
+                "Denzel Washington",
+                "Rzeczpospolita Polska"
+            };
+
+            Random rand = new Random();
+
+            int idx = rand.Next() % passwordsDatabase.Length;
+
+            res = passwordsDatabase[idx];
+
+            return res;
+        }
+
         private bool PasswordContainLetter(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -206,6 +245,8 @@ namespace wisielec
 
         private void GameOver(string msg, Color color)
         {
+            EnableBtnClick = false;
+
             Label label = new Label
             {
                 Text = msg,
