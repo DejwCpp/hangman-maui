@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.Maui.Controls;
 
 namespace wisielec
 {
@@ -13,6 +14,7 @@ namespace wisielec
         {
             InitializeComponent();
             visibleMsg = ChoosePasswordFromArray();
+            DisplayYourOwnPasswordButton();
             DisplayHiddenMessage();
             DisplayButtons();
         }
@@ -59,6 +61,80 @@ namespace wisielec
 
             gridHiddenMsg.Children.Clear();
             gridHiddenMsg.Children.Add(labelMsg);
+        }
+
+        private void DisplayYourOwnPasswordButton()
+        {
+            Button btn = new Button
+            {
+                Text = "Create custom password",
+                FontSize = 20,
+                WidthRequest = 270,
+                HeightRequest = 50,
+                BackgroundColor = Colors.White,
+                TextColor = Color.FromRgb(61, 49, 149)
+            };
+            btn.Clicked += CreateCustomPassword;
+
+            displayInfo.Children.Add(btn);
+        }
+
+        private void CreateCustomPassword(object sender, EventArgs e)
+        {
+            // disable clicking buttons
+            foreach (var child in gridButtons.Children)
+            {
+                if (child is Grid grid)
+                {
+                    foreach (var neastedChild in grid.Children)
+                    {
+                        if (neastedChild is Button btn)
+                        {
+                            btn.IsEnabled = false;
+                        }
+                    }
+                }
+            }
+
+            // display submit button in displayInfo grid
+            Button submitBtn = new Button
+            {
+                Text = "submit",
+                FontSize = 20,
+                WidthRequest = 150,
+                HeightRequest = 50,
+                BackgroundColor = Colors.White,
+                TextColor = Color.FromRgb(61, 49, 149)
+            };
+            submitBtn.Clicked += SubmitButtonClicked;
+
+            displayInfo.Children.Clear();
+            displayInfo.Children.Add(submitBtn);
+
+            // delete actual password and wait for user input
+            gridHiddenMsg.Children.Clear();
+
+            var entry = new Entry
+            {
+                FontSize = 35,
+                HorizontalTextAlignment = TextAlignment.Center,
+                MinimumWidthRequest = 100
+            };
+            gridHiddenMsg.Children.Add(entry);
+
+            hiddenMsg = "";
+
+            entry.Focus();
+
+            entry.TextChanged += (sender, args) =>
+            {
+                hiddenMsg += args.NewTextValue;
+            };
+        }
+
+        private void SubmitButtonClicked(object sender, EventArgs e)
+        {
+
         }
 
         private void DisplayButtons()
@@ -165,6 +241,12 @@ namespace wisielec
 
         private void BtnClick(object sender, EventArgs e)
         {
+            // remove button on first click
+            if (CountClickedBtns == 0)
+            {
+                displayInfo.Children.Clear();
+            }
+
             if (!EnableBtnKeyboardClick) { return; }
 
             Button btn = (Button)sender;
@@ -341,8 +423,11 @@ namespace wisielec
             // Enable button clicks
             EnableBtnKeyboardClick = true;
 
-            // Remove previous game over message and button
+            // Remove previous game over message and button next one
             displayInfo.Children.Clear();
+
+            // display custom password button
+            DisplayYourOwnPasswordButton();
 
             // Remove previous password
             gridHiddenMsg.Children.Clear();
