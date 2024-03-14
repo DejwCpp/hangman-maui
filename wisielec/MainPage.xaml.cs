@@ -81,7 +81,7 @@ namespace wisielec
 
         private void CreateCustomPassword(object sender, EventArgs e)
         {
-            // disable clicking buttons
+            // disable button click
             foreach (var child in gridButtons.Children)
             {
                 if (child is Grid grid)
@@ -122,19 +122,60 @@ namespace wisielec
             };
             gridHiddenMsg.Children.Add(entry);
 
-            hiddenMsg = "";
+            visibleMsg = string.Empty;
+            hiddenMsg = string.Empty;
 
+            // entry properties
             entry.Focus();
+            entry.IsTextPredictionEnabled = false;
 
             entry.TextChanged += (sender, args) =>
             {
-                hiddenMsg += args.NewTextValue;
+                string newText = args.NewTextValue;
+                string filteredText = "";
+
+                foreach (char sign in newText)
+                {
+                    if (IllegalSign(sign)) { continue; }
+
+                    if (char.IsLetter(sign) || sign == ' ')
+                    {
+                        filteredText += sign;
+                    }
+                }
+                entry.Text = filteredText;
+                visibleMsg = filteredText;
             };
+        }
+
+        private bool IllegalSign(char ch)
+        {
+            char[] illegalSigns = { 'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ż', 'ź' };
+            
+            return Array.IndexOf(illegalSigns, ch) != -1;
         }
 
         private void SubmitButtonClicked(object sender, EventArgs e)
         {
+            gridHiddenMsg.Children.Clear();
 
+            // enable button click
+            foreach (var child in gridButtons.Children)
+            {
+                if (child is Grid grid)
+                {
+                    foreach (var neastedChild in grid.Children)
+                    {
+                        if (neastedChild is Button btn)
+                        {
+                            btn.IsEnabled = true;
+                        }
+                    }
+                }
+            }
+            DisplayHiddenMessage();
+
+            displayInfo.Children.Clear();
         }
 
         private void DisplayButtons()
