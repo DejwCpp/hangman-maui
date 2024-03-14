@@ -4,11 +4,11 @@
 
 ## what it looks like:
 
-![Something is wrong](https://github.com/DejwCpp/hangman-maui/blob/master/img/default-screen.jpg)
+![Something is wrong](https://github.com/DejwCpp/hangman-maui/blob/main/img/default-screen.jpg)
 
 ## in the middle of a gameplay:
 
-![Something is wrong](https://github.com/DejwCpp/hangman-maui/blob/master/img/game-play.jpg)
+![Something is wrong](https://github.com/DejwCpp/hangman-maui/blob/main/img/game-play.jpg)
 
 ## Future Modifications:
 
