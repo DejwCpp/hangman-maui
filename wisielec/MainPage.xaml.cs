@@ -136,9 +136,7 @@ namespace wisielec
 
                 foreach (char sign in newText)
                 {
-                    if (IllegalSign(sign)) { continue; }
-
-                    if (char.IsLetter(sign) || sign == ' ')
+                    if (LegalSign(sign))
                     {
                         filteredText += sign;
                     }
@@ -148,11 +146,19 @@ namespace wisielec
             };
         }
 
-        private bool IllegalSign(char ch)
+        private bool LegalSign(char ch)
         {
-            char[] illegalSigns = { 'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ż', 'ź' };
+            char[] legalSigns = {
+                ' ',
+                'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+                'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+                'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+                'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+                'z', 'x', 'c', 'v', 'b', 'n', 'm',
+                'Z', 'X', 'C', 'V', 'B', 'N', 'M'
+            };
             
-            return Array.IndexOf(illegalSigns, ch) != -1;
+            return Array.IndexOf(legalSigns, ch) != -1;
         }
 
         private void SubmitButtonClicked(object sender, EventArgs e)
