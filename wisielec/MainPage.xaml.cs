@@ -173,9 +173,17 @@ namespace wisielec
                     }
                 }
             }
-            DisplayHiddenMessage();
 
             displayInfo.Children.Clear();
+
+            if (visibleMsg.Length == 0)
+            {
+                visibleMsg = ChoosePasswordFromArray();
+
+                DisplayYourOwnPasswordButton();
+            }
+
+            DisplayHiddenMessage();
         }
 
         private void DisplayButtons()
